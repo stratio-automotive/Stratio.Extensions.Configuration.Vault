@@ -1,14 +1,12 @@
-# vault-configuration-dotnet <!-- omit in toc -->
+# Stratio.Extentions.Configuration.Vault <!-- omit in toc -->
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=stratio2_vault-configuration-dotnet&metric=alert_status&token=e71dc8ab542157d1d3fd0c4da2003e3602f2fdd1)](https://sonarcloud.io/summary/new_code?id=stratio2_vault-configuration-dotnet)
+Simplifying Secrets Management in .NET using Hashicorp Vault (powered by Stratio)
 
 ## Description
 
-NuGet package to load Vault secrets into your IHostBuilder configuration automagically
+The Stratio Vault Library serves as a convenient layer on top of the well-established [VaultSharp Library](https://github.com/rajanadar/VaultSharp) acting as an extension of Microsoft’s Configuration and Hosting libraries, specifically tailored for applications written in .NET. Its aim is to simplify the process of using secrets within .NET solutions by leveraging the appsettings.json file and Vault’s secret management software.
 
-Deliverables:
-
-* `Stratio.Extensions.Configuration.Vault.nupkg`
+By utilizing the Stratio Vault Library, developers can seamlessly integrate their applications with secrets or configurations fetched from Vault without the need for extensive code modifications or manual configuration changes. In order to adopt this extensions all you need to do is call `.useVault()` from your HostBuilder, this will connect your application to Vault using vault configuration in your environment. From there you can use secrets in your appsettings files by using the placeholders defined by the library.
 
 ## Table of Contents
 
