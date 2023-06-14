@@ -12,54 +12,54 @@ on:
       - created
 
 jobs:
-  # build:
-  #   runs-on: ubuntu-22.04
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v2
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-  #     - name: Set up .NET
-  #       uses: actions/setup-dotnet@v3
-  #       with:
-  #         dotnet-version: 6.0.x
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
 
-  #     - run: dotnet build
+      - run: dotnet build
 
-  # test:
-  #   runs-on: ubuntu-22.04
-  #   needs: build
-  #   if: github.event_name == 'pull_request'
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v2
+  test:
+    runs-on: ubuntu-22.04
+    needs: build
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-  #     - name: Set up .NET
-  #       uses: actions/setup-dotnet@v3
-  #       with:
-  #         dotnet-version: 6.0.x
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
 
-  #     - name: Start Vault container
-  #       run: docker run -d -p 8200:8200 --name vault hashicorp/vault:latest server -dev -dev-root-token-id=root
+      - name: Start Vault container
+        run: docker run -d -p 8200:8200 --name vault hashicorp/vault:latest server -dev -dev-root-token-id=root
 
-  #     - name: Install Vault in runner
-  #       run: |
-  #         sudo apt update
-  #         sudo apt install -y wget gpg lsb-release libcap2-bin
-  #         sudo wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null
-  #         sudo echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-  #         sudo apt update
-  #         sudo apt -y install vault || true
-  #         sudo apt-get -y install --reinstall vault
+      - name: Install Vault in runner
+        run: |
+          sudo apt update
+          sudo apt install -y wget gpg lsb-release libcap2-bin
+          sudo wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null
+          sudo echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+          sudo apt update
+          sudo apt -y install vault || true
+          sudo apt-get -y install --reinstall vault
 
-  #     - name: Setup Vault
-  #       run: test/start_vault.sh
+      - name: Setup Vault
+        run: test/start_vault.sh
 
-  #     - name: Run tests
-  #       run: dotnet test
+      - name: Run tests
+        run: dotnet test
 
   publish:
     runs-on: ubuntu-latest
-    #needs: test
+    needs: test
     if: github.event_name == 'release' && startsWith(github.ref, 'refs/tags/')
     steps:
       - name: Check Tag Pattern
