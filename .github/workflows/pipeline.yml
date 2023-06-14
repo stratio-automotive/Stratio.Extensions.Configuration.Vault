@@ -28,7 +28,6 @@ jobs:
   test:
     runs-on: ubuntu-22.04
     needs: build
-    if: github.event_name == 'pull_request'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
