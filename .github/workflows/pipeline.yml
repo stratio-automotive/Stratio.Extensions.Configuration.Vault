@@ -30,7 +30,7 @@ jobs:
       - name: Start Vault container
         uses: docker://hashicorp/vault:latest
         with:
-          args: server -dev -dev-root-token-id=root --cap-add IPC_LOCK
+          args: server -dev -dev-root-token-id=root --cap-add=IPC_LOCK
 
       - name: Wait for Vault to start
         run: sleep 5
