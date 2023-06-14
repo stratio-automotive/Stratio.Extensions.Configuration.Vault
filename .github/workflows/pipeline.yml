@@ -30,8 +30,8 @@ jobs:
       - name: Start Vault container
         run: docker run -d -p 8200:8200 --name vault hashicorp/vault:latest server -dev -dev-root-token-id=root
 
-      - name: Wait for Vault to start
-        run: sleep 5
+      - name: Install Vault in runner
+        run: apt update && apt install -y vault
 
       - name: Setup Vault
         run: test/start_vault.sh
