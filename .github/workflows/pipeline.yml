@@ -31,7 +31,9 @@ jobs:
         run: docker run -d -p 8200:8200 --name vault hashicorp/vault:latest server -dev -dev-root-token-id=root
 
       - name: Install Vault in runner
-        run: apt update && apt install -y vault
+        run: |
+          sudo apt update 
+          sudo apt install -y vault
 
       - name: Setup Vault
         run: test/start_vault.sh
