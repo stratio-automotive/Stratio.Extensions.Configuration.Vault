@@ -28,9 +28,7 @@ jobs:
           dotnet-version: 6.0.x
 
       - name: Start Vault container
-        uses: docker://hashicorp/vault:latest
-        with:
-          args: server -dev -dev-root-token-id=root
+        run: docker run -d -p 8200:8200 --name vault hashicorp/vault:latest server -dev -dev-root-token-id=root
 
       - name: Wait for Vault to start
         run: sleep 5
