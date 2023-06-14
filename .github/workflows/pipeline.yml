@@ -2,11 +2,8 @@ name: 'Stratio.Extentions.Configuration.Vault'
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    branches-ignore:
+      - '*'
   release:
     types:
       - created
