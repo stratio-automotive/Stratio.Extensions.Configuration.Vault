@@ -79,7 +79,7 @@ jobs:
         run: dotnet build
 
       - name: Package
-        run: dotnet pack -o output_package /p:Version=${{ github.ref }}
+        run: dotnet pack -o output_package /p:Version=${{ github.ref.replace('refs/tags/', '') }}
           
       - name: Publish NuGet Package
         run: dotnet nuget push output_package/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
