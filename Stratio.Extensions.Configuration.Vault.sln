@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stratio.Extensions.Configuration.Vault", "src\Stratio.Extensions.Configuration.Vault\Stratio.Extensions.Configuration.Vault.csproj", "{89A585DC-F806-40AC-9DE1-E063E58DD226}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stratio.Extensions.Configuration.Vault.Tests", "test\Stratio.Extensions.Configuration.Vault.Tests\Stratio.Extensions.Configuration.Vault.Tests.csproj", "{E28BCC5B-8E70-476F-B63A-8D0B0B2BB4EA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{89A585DC-F806-40AC-9DE1-E063E58DD226}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89A585DC-F806-40AC-9DE1-E063E58DD226}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89A585DC-F806-40AC-9DE1-E063E58DD226}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89A585DC-F806-40AC-9DE1-E063E58DD226}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E28BCC5B-8E70-476F-B63A-8D0B0B2BB4EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E28BCC5B-8E70-476F-B63A-8D0B0B2BB4EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E28BCC5B-8E70-476F-B63A-8D0B0B2BB4EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E28BCC5B-8E70-476F-B63A-8D0B0B2BB4EA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
