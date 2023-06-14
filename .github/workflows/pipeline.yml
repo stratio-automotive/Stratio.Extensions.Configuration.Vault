@@ -3,45 +3,78 @@ name: 'Stratio.Extentions.Configuration.Vault'
 on: [push]
 
 jobs:
-  # build_dotnet:
+  # build:
   #   runs-on: ubuntu-22.04
   #   steps:
   #     - name: Checkout repository
   #       uses: actions/checkout@v2
 
-  #     - name: Set up .NET Core
+  #     - name: Set up .NET
   #       uses: actions/setup-dotnet@v3
   #       with:
   #         dotnet-version: 6.0.x
 
   #     - run: dotnet build
 
-  test_with_vault_secrets:
-    runs-on: ubuntu-22.04
+  # test:
+  #   runs-on: ubuntu-22.04
+  #   needs: build
+  #   if: github.event_name == 'pull_request'
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v2
+
+  #     - name: Set up .NET
+  #       uses: actions/setup-dotnet@v3
+  #       with:
+  #         dotnet-version: 6.0.x
+
+  #     - name: Start Vault container
+  #       run: docker run -d -p 8200:8200 --name vault hashicorp/vault:latest server -dev -dev-root-token-id=root
+
+  #     - name: Install Vault in runner
+  #       run: |
+  #         sudo apt update
+  #         sudo apt install -y wget gpg lsb-release libcap2-bin
+  #         sudo wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null
+  #         sudo echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+  #         sudo apt update
+  #         sudo apt -y install vault || true
+  #         sudo apt-get -y install --reinstall vault
+
+  #     - name: Setup Vault
+  #       run: test/start_vault.sh
+
+  #     - name: Run tests
+  #       run: dotnet test
+
+  publish:
+    runs-on: ubuntu-latest
+    #needs: test
+    if: github.event_name == 'release' && startsWith(github.ref, 'refs/tags/')
     steps:
+      - name: Check Tag Pattern
+        run: |
+          if [[ "${{ github.ref }}" =~ refs/tags/[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+            echo "Publishing tag ${{ github.ref }}"
+          else
+            echo "Skipping job as the tag does not match the pattern X.Y.Z"
+            exit 1
+          fi
+
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up .NET Core
+      - name: Set up .NET
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 6.0.x
 
-      - name: Start Vault container
-        run: docker run -d -p 8200:8200 --name vault hashicorp/vault:latest server -dev -dev-root-token-id=root
+      - name: Build
+        run: dotnet build
 
-      - name: Install Vault in runner
-        run: |
-          sudo apt update
-          sudo apt install -y wget gpg lsb-release libcap2-bin
-          sudo wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null
-          sudo echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-          sudo apt update
-          sudo apt -y install vault || true
-          sudo apt-get -y install --reinstall vault
-
-      - name: Setup Vault
-        run: test/start_vault.sh
-
-      - name: Run tests
-        run: dotnet test
+      - name: Package
+        run: dotnet pack -o output_package /p:Version=${{ github.ref }}
+          
+      - name: Publish NuGet Package
+        run: dotnet nuget push output_package/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
