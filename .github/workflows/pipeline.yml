@@ -1,0 +1,30 @@
+name: 'Stratio.Extentions.Configuration.Vault'
+
+on: [push]
+
+jobs:
+  test_with_vault_secrets:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0
+
+      - name: Start Vault container
+        uses: docker://hashicorp/vault:latest
+        with:
+          args: server -dev -dev-root-token-id=root -dev-plugin-dir=/vault/plugins
+
+      - name: Wait for Vault to start
+        run: sleep 5
+
+      - name: Setup Vault
+        run: test/start_vault.sh
+
+      - name: Run tests
+        run: dotnet test
