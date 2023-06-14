@@ -3,18 +3,18 @@ name: 'Stratio.Extentions.Configuration.Vault'
 on: [push]
 
 jobs:
-  build_dotnet:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+  # build_dotnet:
+  #   runs-on: ubuntu-22.04
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v2
 
-      - name: Set up .NET Core
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: 6.0.x
+  #     - name: Set up .NET Core
+  #       uses: actions/setup-dotnet@v3
+  #       with:
+  #         dotnet-version: 6.0.x
 
-      - run: dotnet build
+  #     - run: dotnet build
 
   test_with_vault_secrets:
     runs-on: ubuntu-22.04
@@ -30,7 +30,7 @@ jobs:
       - name: Start Vault container
         uses: docker://hashicorp/vault:latest
         with:
-          args: server -dev -dev-root-token-id=root -dev-plugin-dir=/vault/plugins
+          args: server -dev -dev-root-token-id=root --cap-add IPC_LOCK
 
       - name: Wait for Vault to start
         run: sleep 5
