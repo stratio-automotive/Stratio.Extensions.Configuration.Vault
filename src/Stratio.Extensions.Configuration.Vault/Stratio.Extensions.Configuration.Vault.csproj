@@ -1,6 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <PackageId>Stratio.Extensions.Configuration.Vault</PackageId>
+    <Authors>Stratio Automotive</Authors>
+    <Description>Simplifying Secrets Management in .NET using Hashicorp Vault</Description>
+    <Copyright>Copyright © 2023 Stratio Automotive</Copyright>
+
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
