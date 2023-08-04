@@ -12,7 +12,7 @@ It ensures that all occurrences of:
 are consistent with the requirements of the Stratio Vault Library.
 
 Usage:
-python appsettings_linter.py <path_to_the_appsettings_files_folder>
+python main.py <path_to_the_appsettings_files_folder>
 
 Authors:
 Rafael Couto (rafaelcouto@stratioautomotive.com)
@@ -24,20 +24,21 @@ For more details refer to: https://github.com/stratio-automotive/Stratio.Extensi
 """
 
 import argparse
-import json
 import os
-import re
 
-# Class that stores the Validation report
-from report.validation_report import ValidationReport
+# File that contains helping methods
+import utils.helper as helper
+
+# Class that stores the Validator report
+from validator.validator_report import ValidatorReport
 from validator.validator import Validator
 
-class SingletonValidationReport(ValidationReport):
+class SingletonValidatorReport(ValidatorReport):
     """
-    A Singleton class that inherits from ValidationReport to ensure a single instance exists.
+    A Singleton class that inherits from ValidatorReport to ensure a single instance exists.
 
     This class uses the Singleton pattern to ensure there's only one instance of the
-    ValidationReport object throughout the script.
+    ValidatorReport object throughout the script.
 
     Attributes:
         _instance: The single instance of the class.
@@ -46,7 +47,7 @@ class SingletonValidationReport(ValidationReport):
         __new__(): Creates and returns the single instance of the class if it doesn't exist.
 
     Usage:
-        validation_report = SingletonValidationReport()
+        validator_report = SingletonValidatorReport()
     """
     _instance = None
 
@@ -55,22 +56,7 @@ class SingletonValidationReport(ValidationReport):
             cls._instance = super().__new__(cls)
         return cls._instance
 
-validation_report = SingletonValidationReport()
-
-def load_appsettings(appsettings_file):
-    """
-    Load an appsettings.json file into a dictionary structure.
-
-    Parameters:
-        - appsettings_file (str): Path to the appsettings.json file.
-
-    Returns:
-        - dict: The appsettings file as a dictionary.
-    """
-    with open(appsettings_file, "r") as base:
-        settings = json.load(base)
-
-    return settings
+validator_report = SingletonValidatorReport()
 
 def process_base_appsettings_file(appsettings_file):
     """
@@ -80,11 +66,9 @@ def process_base_appsettings_file(appsettings_file):
     Parameters:
         - appsettings_file (str): The path to the base appsettings.json file.
     """
-    appsettings_data = load_appsettings(appsettings_file)
-
-    validator = Validator(validation_report)
-    validator.validate_base_appsettings_placeholders(appsettings_data, appsettings_file)
-    validator.validate_vault_object(appsettings_data, appsettings_file)
+    validator = Validator(appsettings_file, validator_report)
+    validator.validate_base_appsettings_placeholders()
+    validator.validate_vault_object()
 
 def process_environment_appsettings_file(appsettings_file):
     """
@@ -94,11 +78,9 @@ def process_environment_appsettings_file(appsettings_file):
     Parameters:
         - appsettings_file (str): The path to the environment appsettings file.
     """
-    appsettings_data = load_appsettings(appsettings_file)
-
-    validator = Validator(validation_report)
-    validator.validate_environment_appsettings_placeholders(appsettings_data, appsettings_file)
-    validator.validate_vault_object(appsettings_data, appsettings_file)
+    validator = Validator(appsettings_file, validator_report)
+    validator.validate_environment_appsettings_placeholders()
+    validator.validate_vault_object()
 
 def main(work_dir):
     """
@@ -111,8 +93,8 @@ def main(work_dir):
     # Look for appsettings.json file first
     base_appsettings_file = os.path.join(work_dir, "appsettings.json")
     if not os.path.exists(base_appsettings_file):
-        validation_report.add_failure("appsettings.json", "File wasn't found in the given folder.")
-        validation_report.print_report()
+        print(helper.color_text("\nThe base file 'appsettings.json' wasn't found in the provided directory.", "red"))
+        exit(1)
 
     # Process base appsettings file
     process_base_appsettings_file(base_appsettings_file)
@@ -124,20 +106,14 @@ def main(work_dir):
             env_appsettings_file != "appsettings.json":
             process_environment_appsettings_file(os.path.join(work_dir, env_appsettings_file))
 
-    # Print the report
-    validation_report.print_report_table()
+    # Print the report for each file
+    validator_report.print_report_table()
 
-    print ("\n=== SUMMARY ===")
-    exit_status = 0
-    for file, failures in validation_report.get_failures().items():
-        print("> " + file + " " +
-              (validation_report.colored("\u2717", "red") if len(failures) > 0 else validation_report.colored("\u2713", "green")))
-        if len(failures) > 0:
-            exit_status = 1
-            for item, message in failures:
-                print(validation_report.colored("  - " + item + ": " + message, "red"))
+    # Print the exit summary and find the exit status
+    failures = validator_report.print_exit_summary()
 
-    exit(exit_status)
+    # Exit code is conditioned on the existence of failures
+    exit(1 if failures > 0 else 0)
 
 if __name__ == "__main__":
 
@@ -151,7 +127,7 @@ if __name__ == "__main__":
 
     # Before anything lets validate if the work dir exist
     if not os.path.isdir(args.work_dir):
-        print (f"\nThe provided directory '{args.work_dir}' does not exist!")
+        print (helper.color_text(f"\nThe provided directory '{args.work_dir}' does not exist!", "red"))
         exit(1)
 
     main(args.work_dir)
