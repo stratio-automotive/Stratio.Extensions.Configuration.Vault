@@ -1,0 +1,54 @@
+name: 'Stratio.Extentions.Configuration.Vault.Utils.Linter'
+
+on:
+  push:
+    branches-ignore:
+      - '*'
+  release:
+    types:
+      - created
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.10
+
+      - name: Change to linter directory
+        run: cd utils/linter
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run pytest
+        run: pytest
+
+  # deploy-docker:
+  #   runs-on: ubuntu-latest
+  #   needs: test
+  #   if: github.event_name == 'release' && startsWith(github.ref, 'refs/tags/')
+  #   steps:
+  #     - name: Check Tag Pattern
+  #       run: |
+  #         if [[ "${{ github.ref }}" =~ refs/tags/[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+  #           echo "Publishing tag ${{ github.ref }}"
+  #         else
+  #           echo "Skipping job as the tag does not match the pattern X.Y.Z"
+  #           exit 1
+  #         fi
+
+  #     - name: Build and release Docker image
+  #       env:
+  #         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  #         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+  #       run: |
+  #         echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+  #         docker build -t stratio-extensions-vault-linter:${{ github.ref }} -t stratio-extensions-vault-linter:latest .
+  #         docker push stratio-extensions-vault-linter:latest
+  #         docker push stratio-extensions-vault-linter:${{ github.ref }}

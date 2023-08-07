@@ -23,6 +23,7 @@ This script is licensed under the same license of the parent project
 For more details refer to: https://github.com/stratio-automotive/Stratio.Extensions.Configuration.Vault/blob/main/License.md
 """
 
+import copy
 import json
 import re
 import validators
@@ -112,11 +113,18 @@ class Validator:
         the validation report.
         """
 
+        clean_appsettings_data = copy.deepcopy(self.appsettings_data)
+        
+        # When we're validating the secret fields we don't need to validate the vault connection
+        # That's what the validate_vault_object method is for
+        if "Vault" in self.appsettings_data:
+            del clean_appsettings_data["Vault"]
+
         # Goes through all the placeholders in the appsettings file
-        for match in re.findall(r'{% (.+?) %}', json.dumps(self.appsettings_data)):
+        for match in re.findall(r'{% (.+?) %}', json.dumps(clean_appsettings_data)):
 
             # Vault Secret Field
-            if match.startswith("vault_secret"):
+            if match.startswith("vault_secret "): 
                 self.match_placeholder(
                     self.appsettings_file,
                     match,
@@ -125,7 +133,7 @@ class Validator:
                 )
 
             # Vault Secret Dict
-            elif match.startswith("vault_dict"):
+            elif match.startswith("vault_dict "):
                 self.match_placeholder(
                     self.appsettings_file,
                     match,
@@ -147,7 +155,7 @@ class Validator:
                 self.validator_report.add_warning(
                     self.appsettings_file,
                     "'{% " + match + " %}'",
-                    "Are you sure that is correct? You might be using it for something else!"
+                    "Are you sure that this is correct? You might be using it for something else!"
                 )
 
     def validate_environment_appsettings_placeholders(self):
@@ -156,8 +164,15 @@ class Validator:
         the validation report.
         """
 
+        clean_appsettings_data = copy.deepcopy(self.appsettings_data)
+        
+        # When we're validating the secret fields we don't need to validate the vault connection
+        # That's what the validate_vault_object method is for
+        if "Vault" in self.appsettings_data:
+            del clean_appsettings_data["Vault"]
+
         # Goes through all the placeholders in the appsettings file
-        for match in re.findall(r'{% (.+?) %}', json.dumps(self.appsettings_data)):
+        for match in re.findall(r'{% (.+?) %}', json.dumps(clean_appsettings_data)):
 
             # Home
             if match.startswith("user_home"):
@@ -213,7 +228,7 @@ class Validator:
             self.match_field(
                 self.appsettings_file,
                 self.appsettings_data["Vault"]["mountPoint"],
-                "^(?!.*--)(?!.*\/\/)(?!.*-\/)(?!.*\/-)(?!-.*)(?!\/.*)([a-zA-Z0-9-]*\/)*[a-zA-Z0-9]+$",
+                "^(?!.*--)(?!.*\/\/)(?!.*-\/)(?!.*\/-)(?!-.*)(?!\/.*)([a-zA-Z0-9-]*\/)*[a-zA-Z0-9-]+$",
                 "is a valid Vault mountpoint.",
                 "is NOT a valid Vault mountpoint."
             )
