@@ -18,16 +18,23 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.10.12
+          python-version: "3.10"
       
       - name: Install dependencies
-        run: python -m pip install --upgrade pip setuptools wheel
+        run: |
+            cd utils/linter
+            python -m pip install --upgrade pip
+            pip install ruff pytest
+            if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Install dependencies
+        run: |
+            cd utils/linter
+            ruff --format=github --ignore=E501 . 
 
       - name: Change to linter directory and run tests
         run: |
             cd utils/linter
-            python -m pip install --upgrade pip
-            pip install -r requirements.txt
             pytest
 
   # deploy-docker:
