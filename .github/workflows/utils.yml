@@ -18,16 +18,17 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: 3.10
       
       - name: Install dependencies
         run: |
             cd utils/linter
+            apt-get install -y python3-setuptools
             python -m pip install --upgrade pip
             pip install ruff pytest
             if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Install dependencies
+      - name: Run Python Linter
         run: |
             cd utils/linter
             ruff --format=github --ignore=E501 . 
