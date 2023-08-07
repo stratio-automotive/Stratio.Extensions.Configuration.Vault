@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: |
             cd utils/linter
-            apt-get install -y python3-setuptools
+            sudo apt-get install -y python3-setuptools
             python -m pip install --upgrade pip
             pip install ruff pytest
             if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
