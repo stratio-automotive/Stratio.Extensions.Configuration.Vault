@@ -23,7 +23,9 @@ This script is licensed under the same license of the parent project
 For more details refer to: https://github.com/stratio-automotive/Stratio.Extensions.Configuration.Vault/blob/main/License.md
 """
 
-from tabulate import tabulate
+from rich.console import Console
+from rich.table import Table
+from rich import box
 
 # File that contains helping methods
 import utils.helper as helper
@@ -109,42 +111,75 @@ class ValidatorReport:
         # Print a table for each of the files
         for filename, report_data in self.__files.items():
 
-            table = []
+            table = Table(
+                title=f"\nAppsettings file: {filename}",
+                expand=True,
+                caption=f"Successes: {str(len(report_data['successes']))}, " +
+                        f"Warnings: {str(len(report_data['warnings']))}, " +
+                        f"Failures: {str(len(report_data['failures']))}",
+                box=box.SQUARE_DOUBLE_HEAD,
+                show_lines=True)
+            table.add_column("Status", justify="center", no_wrap=True)
+            table.add_column("#", justify="center", no_wrap=True)
+            table.add_column("Item", justify="left")
+            table.add_column("Message", justify="left")
 
             # Add successes to the report table
             if report_data["successes"]:
-                success_messages = "\n".join([f"{item}: {message}" for item, message in report_data["successes"]])
+                table.add_row(
+                    "Success",
+                    str(len(report_data["successes"])),
+                    "\n".join([f"{item}" for item, message in report_data["successes"]]),
+                    "\n".join([f"{message}" for item, message in report_data["successes"]]),
+                    style="green"
+                )
             else:
-                success_messages = ""
-            table.append([
-                helper.color_text("Successes (" + str(len(report_data["successes"])) + ")", 'green'),
-                helper.color_text(success_messages, 'green')]
-            )
+                table.add_row(
+                    "Success",
+                    "0",
+                    "",
+                    "",
+                    style="green"
+                )
 
             # Add warnings to the report table
             if report_data["warnings"]:
-                warning_messages = "\n".join([f"{item}: {message}" for item, message in report_data["warnings"]])
+                table.add_row(
+                    "Warning",
+                    str(len(report_data["warnings"])),
+                    "\n".join([f"{item}" for item, message in report_data["warnings"]]),
+                    "\n".join([f"{message}" for item, message in report_data["warnings"]]),
+                    style="yellow"
+                )
             else:
-                warning_messages = ""
-            table.append([
-                helper.color_text("Warnings (" + str(len(report_data["warnings"])) + ")", 'yellow'),
-                helper.color_text(warning_messages, 'yellow')]
-            )
+                table.add_row(
+                    "Warning",
+                    "0",
+                    "",
+                    "",
+                    style="yellow"
+                )
 
             # Add failures to the report table
             if report_data["failures"]:
-                failure_messages = "\n".join([f"{item}: {message}" for item, message in report_data["failures"]])
+                table.add_row(
+                    "Failure",
+                    str(len(report_data["failures"])),
+                    "\n".join([f"{item}" for item, message in report_data["failures"]]),
+                    "\n".join([f"{message}" for item, message in report_data["failures"]]),
+                    style="red"
+                )
             else:
-                failure_messages = ""
-            table.append([
-                helper.color_text("Failures (" + str(len(report_data["failures"])) + ")", 'red'),
-                helper.color_text(failure_messages, 'red')]
-            )
+                table.add_row(
+                    "Failure",
+                    "0",
+                    "",
+                    "",
+                    style="red"
+                )
 
-            # Print table
-            headers = ["Report", "Item"]
-            print(f"\n=== {filename} ===")
-            print(tabulate(table, headers=headers, tablefmt="fancy_grid"))
+            console = Console()
+            console.print(table)
 
     def print_exit_summary(self):
         """

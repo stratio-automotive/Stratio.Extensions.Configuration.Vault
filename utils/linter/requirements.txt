@@ -1,2 +1,2 @@
-tabular
+rich
 validators
