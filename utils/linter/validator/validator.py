@@ -114,7 +114,7 @@ class Validator:
         """
 
         clean_appsettings_data = copy.deepcopy(self.appsettings_data)
-        
+
         # When we're validating the secret fields we don't need to validate the vault connection
         # That's what the validate_vault_object method is for
         if "Vault" in self.appsettings_data:
@@ -124,11 +124,11 @@ class Validator:
         for match in re.findall(r'{% (.+?) %}', json.dumps(clean_appsettings_data)):
 
             # Vault Secret Field
-            if match.startswith("vault_secret "): 
+            if match.startswith("vault_secret "):
                 self.match_placeholder(
                     self.appsettings_file,
                     match,
-                    "^vault_secret\s+([a-zA-Z]+(?:[-\/][a-zA-Z]+)*):([a-zA-Z]+(?:[-\/][a-zA-Z]+)*)$",
+                    r'^vault_secret\s+([a-zA-Z]+(?:[-\/][a-zA-Z]+)*):([a-zA-Z]+(?:[-\/][a-zA-Z]+)*)$',
                     "Vault secret field placeholders should be similar to: '{% vault_secret path/to/secret:key %}'."
                 )
 
@@ -137,7 +137,7 @@ class Validator:
                 self.match_placeholder(
                     self.appsettings_file,
                     match,
-                    "^vault_dict\s+([a-zA-Z]+(?:[-\/][a-zA-Z]+)*)$",
+                    r'^vault_dict\s+([a-zA-Z]+(?:[-\/][a-zA-Z]+)*)$',
                     "Vault secret dict placeholders should be similar to: '{% vault_dict path/to/secret %}'."
                 )
 
@@ -146,7 +146,7 @@ class Validator:
                 self.match_placeholder(
                     self.appsettings_file,
                     match,
-                    "^user_home$",
+                    r'^user_home$',
                     "The user home placeholder should be literally only: '{% user_home %}'."
                 )
 
@@ -165,7 +165,7 @@ class Validator:
         """
 
         clean_appsettings_data = copy.deepcopy(self.appsettings_data)
-        
+
         # When we're validating the secret fields we don't need to validate the vault connection
         # That's what the validate_vault_object method is for
         if "Vault" in self.appsettings_data:
@@ -179,7 +179,7 @@ class Validator:
                 self.match_placeholder(
                     self.appsettings_file,
                     match,
-                    "^user_home$",
+                    r'^user_home$',
                     "The user home placeholder should be literally only: '{% user_home %}'."
                 )
 
@@ -228,7 +228,7 @@ class Validator:
             self.match_field(
                 self.appsettings_file,
                 self.appsettings_data["Vault"]["mountPoint"],
-                "^(?!.*--)(?!.*\/\/)(?!.*-\/)(?!.*\/-)(?!-.*)(?!\/.*)([a-zA-Z0-9-]*\/)*[a-zA-Z0-9-]+$",
+                r'^(?!.*--)(?!.*\/\/)(?!.*-\/)(?!.*\/-)(?!-.*)(?!\/.*)([a-zA-Z0-9-]*\/)*[a-zA-Z0-9-]+$',
                 "is a valid Vault mountpoint.",
                 "is NOT a valid Vault mountpoint."
             )
@@ -242,7 +242,7 @@ class Validator:
             self.match_field(
                 self.appsettings_file,
                 self.appsettings_data["Vault"]["approleAuthName"],
-                "^(?!.*--)(?!-.*)([a-zA-Z0-9-]*)$",
+                r'^(?!.*--)(?!-.*)([a-zA-Z0-9-]*)$',
                 "is a valid Vault AppRole authentication method name.",
                 "is NOT a valid Vault AppRole authentication method name."
             )
@@ -252,7 +252,7 @@ class Validator:
             self.match_field(
                 self.appsettings_file,
                 self.appsettings_data["Vault"]["roleIdPath"],
-                "^({% user_home %}){0,1}([\/]*[a-zA-Z0-9_\-\.]+)+(.[a-zA-Z]+?)$",
+                r'^({% user_home %}){0,1}([\/]*[a-zA-Z0-9_\-\.]+)+(.[a-zA-Z]+?)$',
                 "is a valid Vault AppRole ID path.",
                 "is NOT a valid Vault AppRole ID path."
             )
@@ -262,7 +262,7 @@ class Validator:
             self.match_field(
                 self.appsettings_file,
                 self.appsettings_data["Vault"]["secretIdPath"],
-                "^({% user_home %}){0,1}([\/]*[a-zA-Z0-9_\-\.]+)+(.[a-zA-Z]+?)$",
+                r'^({% user_home %}){0,1}([\/]*[a-zA-Z0-9_\-\.]+)+(.[a-zA-Z]+?)$',
                 "is a valid Vault AppRole secret ID path.",
                 "is NOT a valid Vault AppRole secret ID path."
             )
@@ -276,7 +276,7 @@ class Validator:
             self.match_field(
                 self.appsettings_file,
                 self.appsettings_data["Vault"]["kubernetesAuthName"],
-                "^(?!.*--)(?!-.*)([a-zA-Z0-9-]*)$",
+                r'^(?!.*--)(?!-.*)([a-zA-Z0-9-]*)$',
                 "is a valid Vault Kubernetes authentication method name.",
                 "is NOT a valid Vault Kubernetes authentication method name."
             )
@@ -286,7 +286,7 @@ class Validator:
             self.match_field(
                 self.appsettings_file,
                 self.appsettings_data["Vault"]["kubernetesSaRoleName"],
-                "^(?!.*--)(?!-.*)([a-zA-Z0-9-]*)$",
+                r'^(?!.*--)(?!-.*)([a-zA-Z0-9-]*)$',
                 "is a valid Vault Kubernetes Service Account name.",
                 "is NOT a valid Vault Kubernetes Service Account name."
             )
@@ -296,7 +296,7 @@ class Validator:
             self.match_field(
                 self.appsettings_file,
                 self.appsettings_data["Vault"]["kubernetesSaTokenPath"],
-                "^({% user_home %}){0,1}([\/]*[a-zA-Z0-9_\-\.]+)+(.[a-zA-Z]+?)$",
+                r'^({% user_home %}){0,1}([\/]*[a-zA-Z0-9_\-\.]+)+(.[a-zA-Z]+?)$',
                 "is a valid Vault Kubernetes Service Account token path.",
                 "is NOT a valid Vault Kubernetes Service Account token path."
             )
