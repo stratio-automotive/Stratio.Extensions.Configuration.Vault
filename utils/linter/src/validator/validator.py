@@ -58,7 +58,7 @@ class Validator:
         with open(appsettings_file, "r") as base:
             try:
                 settings = json.load(base)
-            except Exception as e:
+            except Exception:
                 self.validator_report.add_failure(
                     appsettings_file,
                     "Invalid JSON",
@@ -122,7 +122,7 @@ class Validator:
         """
 
         # If the appsettings file couldn't be loaded, just return w/out doing nothing
-        if self.appsettings_data == None:
+        if self.appsettings_data is None:
             return
 
         clean_appsettings_data = copy.deepcopy(self.appsettings_data)
@@ -177,7 +177,7 @@ class Validator:
         """
 
         # If the appsettings file couldn't be loaded, just return w/out doing nothing
-        if self.appsettings_data == None:
+        if self.appsettings_data is None:
             return
 
         clean_appsettings_data = copy.deepcopy(self.appsettings_data)
@@ -213,7 +213,7 @@ class Validator:
         """
 
         # If the appsettings file couldn't be loaded, just return w/out doing nothing
-        if self.appsettings_data == None:
+        if self.appsettings_data is None:
             return
 
         if "Vault" not in self.appsettings_data:
