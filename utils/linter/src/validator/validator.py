@@ -44,8 +44,7 @@ class Validator:
         self.appsettings_file = appsettings_file
         self.appsettings_data = self.load_appsettings(appsettings_file)
 
-    @staticmethod
-    def load_appsettings(appsettings_file):
+    def load_appsettings(self, appsettings_file):
         """
         Load an appsettings.json file into a dictionary structure.
 
@@ -53,10 +52,19 @@ class Validator:
             - appsettings_file (str): Path to the appsettings.json file.
 
         Returns:
-            - dict: The appsettings file as a dictionary.
+            - dict|None: The appsettings file as a dictionary or None if the file couldn't be loaded.
         """
+
         with open(appsettings_file, "r") as base:
-            settings = json.load(base)
+            try:
+                settings = json.load(base)
+            except Exception as e:
+                self.validator_report.add_failure(
+                    appsettings_file,
+                    "Invalid JSON",
+                    "File has a broken JSON syntax and could not be parsed."
+                )
+                return None
 
         return settings
 
@@ -113,6 +121,10 @@ class Validator:
         the validation report.
         """
 
+        # If the appsettings file couldn't be loaded, just return w/out doing nothing
+        if self.appsettings_data == None:
+            return
+
         clean_appsettings_data = copy.deepcopy(self.appsettings_data)
 
         # When we're validating the secret fields we don't need to validate the vault connection
@@ -164,6 +176,10 @@ class Validator:
         the validation report.
         """
 
+        # If the appsettings file couldn't be loaded, just return w/out doing nothing
+        if self.appsettings_data == None:
+            return
+
         clean_appsettings_data = copy.deepcopy(self.appsettings_data)
 
         # When we're validating the secret fields we don't need to validate the vault connection
@@ -195,6 +211,10 @@ class Validator:
         """
         Validates the Vault object to make sure it has a proper configuration.
         """
+
+        # If the appsettings file couldn't be loaded, just return w/out doing nothing
+        if self.appsettings_data == None:
+            return
 
         if "Vault" not in self.appsettings_data:
             self.validator_report.add_warning(

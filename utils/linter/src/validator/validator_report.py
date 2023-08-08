@@ -28,7 +28,7 @@ from rich.table import Table
 from rich import box
 
 # File that contains helping methods
-import utils.helper as helper
+from ..utils import helper
 
 class ValidatorReport:
     """

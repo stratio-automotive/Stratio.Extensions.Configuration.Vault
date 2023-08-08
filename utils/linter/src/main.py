@@ -27,11 +27,11 @@ import argparse
 import os
 
 # File that contains helping methods
-import utils.helper as helper
+from .utils import helper
 
 # Class that stores the Validator report
-from validator.validator_report import ValidatorReport
-from validator.validator import Validator
+from .validator.validator_report import ValidatorReport
+from .validator.validator import Validator
 
 class SingletonValidatorReport(ValidatorReport):
     """
@@ -82,13 +82,26 @@ def process_environment_appsettings_file(appsettings_file):
     validator.validate_environment_appsettings_placeholders()
     validator.validate_vault_object()
 
-def main(work_dir):
+def main():
     """
     Main function.
-
-    Parameters:
-        - work_dir (str): The path where the appsettings files are located.
     """
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--work-dir', required=True,help='The directory where the appsettings files should be located.')
+
+    args = parser.parse_args()
+
+    work_dir = args.work_dir
+
+    print("=== Appsettings Linter ===")
+    print("\nThe current script will validate the appsettings files found in: " + work_dir)
+
+    # Before anything lets validate if the work dir exist
+    if not os.path.isdir(work_dir):
+        print (helper.color_text(f"\nThe provided directory '{work_dir}' does not exist!", "red"))
+        exit(1)
+
 
     # Look for appsettings.json file first
     base_appsettings_file = os.path.join(work_dir, "appsettings.json")
@@ -116,18 +129,4 @@ def main(work_dir):
     exit(1 if failures > 0 else 0)
 
 if __name__ == "__main__":
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--work-dir', required=True,help='The directory where the appsettings files should be located.')
-
-    args = parser.parse_args()
-
-    print("=== Appsettings Linter ===")
-    print("\nThe current script will validate the appsettings files found in: " + args.work_dir)
-
-    # Before anything lets validate if the work dir exist
-    if not os.path.isdir(args.work_dir):
-        print (helper.color_text(f"\nThe provided directory '{args.work_dir}' does not exist!", "red"))
-        exit(1)
-
-    main(args.work_dir)
+    main()

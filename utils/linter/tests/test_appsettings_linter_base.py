@@ -1,5 +1,5 @@
-from validator.validator import Validator
-from validator.validator_report import ValidatorReport
+from src.validator.validator import Validator
+from src.validator.validator_report import ValidatorReport
 
 # Sets the base folder where the test resources are located at
 resources_folder = "tests/resources/"
