@@ -51,6 +51,9 @@ jobs:
       #       echo "Skipping job as the tag does not match the pattern X.Y.Z"
       #       exit 1
       #     fi
+      
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
       - name: Build and release Docker image
         env:
