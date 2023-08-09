@@ -57,6 +57,7 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
+          cd utils/linter
           echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
           # docker build -t stratioautomotive/vault-appsettings-linter:${{ github.ref }} -t stratioautomotive/vault-appsettings-linter:latest .
           docker build -t stratioautomotive/vault-appsettings-linter:latest .
