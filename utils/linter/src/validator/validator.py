@@ -212,7 +212,7 @@ class Validator:
 
         # Validate the syntax of the Vault address
         if "vaultAddress" in self.appsettings_data["Vault"]:
-            if validators.url(self.appsettings_data["Vault"]["vaultAddress"], public=True):
+            if validators.url(self.appsettings_data["Vault"]["vaultAddress"]):
                 self.validator_report.add_success(
                     self.appsettings_file,
                     self.appsettings_data["Vault"]["vaultAddress"],
