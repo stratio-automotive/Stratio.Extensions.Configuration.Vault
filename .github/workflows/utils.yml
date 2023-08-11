@@ -23,8 +23,8 @@ jobs:
       - name: Install dependencies
         run: |
             cd utils/linter
-            python3 -m pip install --upgrade pip
-            pip3 install --upgrade ruff pytest
+            python3 -m pip install --upgrade pip 
+            pip3 install --upgrade setuptools ruff pytest pytest-cov
             if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Run Python Linter
