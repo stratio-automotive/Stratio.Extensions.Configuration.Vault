@@ -469,3 +469,6 @@ doxydocs
 
 # Disable pushing this test to the repo
 test/VaultConfigurationTester
+
+utils/linter/dist
+*.pytest_cache

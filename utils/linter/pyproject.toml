@@ -1,0 +1,39 @@
+[build-system] 
+requires = ["setuptools>=61.0", "rich", "validators"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vault-appsettings-linter"
+version = "0.1.0"
+authors = [
+  { name="Stratio Automotive", email="devops@stratioautomotive.com" },
+  { name="Rafael Couto", email="rafaelcouto@stratioautomotive.com" },
+  { name="Bernardo Marques", email="bernardomarques@stratioautomotive.com" }
+]
+maintainers = [
+  { name="Rafael Couto", email="rafaelcouto@stratioautomotive.com" },
+  { name="Bernardo Marques", email="bernardomarques@stratioautomotive.com" }
+]
+description = "Stratio Appsettings files linter for compatibility with Stratio.Extensions.Configuration.Vault"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers=[
+    "Environment :: Console",
+    "Programming Language :: Python :: 3.10",
+    "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers"
+]
+license = {file = "License.md"}
+keywords = ["hashicorp", "vault", "appsettings", "linter", "stratio", ".NET", "dotnet"]
+dependencies = [
+  "rich",
+  "validators"
+]
+
+[project.urls]
+"Repository" = "https://github.com/stratio-automotive/Stratio.Extensions.Configuration.Vault"
+"Stratio Automotive" = "https://www.stratioautomotive.com"
+
+[project.scripts]
+vault-appsettings-linter = "main:main"
