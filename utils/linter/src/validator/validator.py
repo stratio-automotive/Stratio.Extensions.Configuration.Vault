@@ -133,7 +133,7 @@ class Validator:
                 self.match_placeholder(
                     self.appsettings_file,
                     match,
-                    r'^vault_secret\s+([a-zA-Z]+(?:[-\/][a-zA-Z]+)*):([a-zA-Z]+(?:[-\/][a-zA-Z]+)*)$',
+                    r'^vault_secret\s+([_a-zA-Z]+(?:[-\/][_a-zA-Z]+)*):([_a-zA-Z]+(?:[-\/][_a-zA-Z]+)*)$',
                     "Vault secret field placeholders should be similar to: '{% vault_secret path/to/secret:key %}'."
                 )
 
@@ -142,7 +142,7 @@ class Validator:
                 self.match_placeholder(
                     self.appsettings_file,
                     match,
-                    r'^vault_dict\s+([a-zA-Z]+(?:[-\/][a-zA-Z]+)*)$',
+                    r'^vault_dict\s+([_a-zA-Z]+(?:[-\/][_a-zA-Z]+)*)$',
                     "Vault secret dict placeholders should be similar to: '{% vault_dict path/to/secret %}'."
                 )
 
@@ -212,7 +212,7 @@ class Validator:
 
         # Validate the syntax of the Vault address
         if "vaultAddress" in self.appsettings_data["Vault"]:
-            if validators.url(self.appsettings_data["Vault"]["vaultAddress"]):
+            if validators.url(self.appsettings_data["Vault"]["vaultAddress"], public=True):
                 self.validator_report.add_success(
                     self.appsettings_file,
                     self.appsettings_data["Vault"]["vaultAddress"],
