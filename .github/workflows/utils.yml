@@ -103,6 +103,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # This tries to compensate the fact that PyPi needs to index the package so that
+      # the Docker job can later pick the new package. 
+      - name: Sleep for 5 minutes
+        run: sleep 300s
+        shell: bash
+
       - name: Build and release Docker image
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
