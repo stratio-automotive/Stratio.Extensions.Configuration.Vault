@@ -78,8 +78,11 @@ jobs:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
+        cd utils/linter
+
         PYPI_PACKAGE_VERSION=$(echo "${{ github.ref }}" | sed 's/refs\/tags\///')
         sed -i 's/version = "0.0.0"/version = "'$PYPI_PACKAGE_VERSION'"/' pyproject.toml 
+        
         python -m build
         twine upload dist/*
 
@@ -106,6 +109,7 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           cd utils/linter
+          
           echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
 
           DOCKER_IMAGE_TAG=$(echo "${{ github.ref }}" | sed 's/refs\/tags\///')
