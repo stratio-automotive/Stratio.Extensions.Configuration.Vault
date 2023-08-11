@@ -35,7 +35,14 @@ jobs:
       - name: Change to linter directory and run tests
         run: |
             cd utils/linter
-            pytest
+            pytest --cov-report html --cov -v
+
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v3
+        with:
+          name: code-coverage-report
+          path: utils/linter/htmlcov/*
+          retention-days: 31
 
   release-pypi-package:
     runs-on: ubuntu-latest

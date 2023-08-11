@@ -183,22 +183,11 @@ class Validator:
         # Goes through all the placeholders in the appsettings file
         for match in re.findall(r'{% (.+?) %}', json.dumps(clean_appsettings_data)):
 
-            # Home
-            if match.startswith("user_home"):
-                self.match_placeholder(
-                    self.appsettings_file,
-                    match,
-                    r'^user_home$',
-                    "The user home placeholder should be literally only: '{% user_home %}'."
-                )
-
-            # Anything else should be set in the base appsettings_folder, let's create a warning
-            else:
-                self.validator_report.add_warning(
-                    self.appsettings_file,
-                    "'{% " + match + " %}'",
-                    "As a best practice you should put all your secret placeholders in the base appsettings.json file!"
-                )
+            self.validator_report.add_warning(
+                self.appsettings_file,
+                "'{% " + match + " %}'",
+                "As a best practice you should put all your secret placeholders in the base appsettings.json file!"
+            )
 
     def validate_vault_object(self):
         """
