@@ -24,7 +24,7 @@ jobs:
         run: |
             cd utils/linter
             python3 -m pip install --upgrade pip
-            python3 pip install --upgrade ruff pytest
+            pip3 install --upgrade ruff pytest
             if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Run Python Linter
