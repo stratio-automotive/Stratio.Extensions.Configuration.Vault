@@ -78,7 +78,8 @@ jobs:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
-        sed -i 's/version = "0.0.0"/version = "${{ github.ref }}"/' pyproject.toml 
+        PYPI_PACKAGE_VERSION=$(echo "${{ github.ref }}" | sed 's/refs\/tags\///')
+        sed -i 's/version = "0.0.0"/version = "'$PYPI_PACKAGE_VERSION'"/' pyproject.toml 
         python -m build
         twine upload dist/*
 
@@ -107,10 +108,12 @@ jobs:
           cd utils/linter
           echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
 
+          DOCKER_IMAGE_TAG=$(echo "${{ github.ref }}" | sed 's/refs\/tags\///')
+
           docker build \
-            -t stratioautomotive/vault-appsettings-linter:${{ github.ref }} \
+            -t stratioautomotive/vault-appsettings-linter:$DOCKER_IMAGE_TAG \
             -t stratioautomotive/vault-appsettings-linter:latest \
-            --build-arg "PYPI_PACKAGE_VERSION=${{ github.ref }}" .
+            --build-arg "PYPI_PACKAGE_VERSION=$DOCKER_IMAGE_TAG" .
           
           docker push stratioautomotive/vault-appsettings-linter:latest
-          docker push stratioautomotive/vault-appsettings-linter:${{ github.ref }}
+          docker push stratioautomotive/vault-appsettings-linter:$DOCKER_IMAGE_TAG
