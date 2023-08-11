@@ -71,6 +71,7 @@ jobs:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
+        sed -i 's/version = "0.0.0"/version = "${{ github.ref }}"/' pyproject.toml 
         python -m build
         twine upload dist/*
 

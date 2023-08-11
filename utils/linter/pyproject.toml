@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "vault-appsettings-linter"
-version = "0.1.0"
+version = "0.0.0"
 authors = [
   { name="Stratio Automotive", email="devops@stratioautomotive.com" },
   { name="Rafael Couto", email="rafaelcouto@stratioautomotive.com" },
