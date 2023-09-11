@@ -35,9 +35,9 @@ def test_env_kubernetes_appsettings_file_all_good():
     linter.validate_vault_object()
 
     assert len(validator_report._ValidatorReport__files[appsettings_file]["successes"]) == 5
-    assert any("https://vault-2022.stratio.local:8200" in item
+    assert any("https://my-vault.my-org.com:8200" in item
                 for item in validator_report._ValidatorReport__files[appsettings_file]["successes"])
-    assert any("app/uat" in item for item in validator_report._ValidatorReport__files[appsettings_file]["successes"])
+    assert any("env/prod" in item for item in validator_report._ValidatorReport__files[appsettings_file]["successes"])
     assert any("kubernetes" in item for item in validator_report._ValidatorReport__files[appsettings_file]["successes"])
     assert any("kubernetes-role" in item for item in validator_report._ValidatorReport__files[appsettings_file]["successes"])
     assert any("/var/run/secrets/kubernetes.io/serviceaccount/token" in item
