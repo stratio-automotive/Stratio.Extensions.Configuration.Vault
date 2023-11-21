@@ -30,7 +30,7 @@ jobs:
       - name: Run Python Linter
         run: |
             cd utils/linter
-            ruff --format=github --ignore=E501 src/
+            ruff --output-format=github --ignore=E501 src/
 
       - name: Change to linter directory and run tests
         run: |
