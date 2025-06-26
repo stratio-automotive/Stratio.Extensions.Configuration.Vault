@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['mountpoint_120',['MountPoint',['../classVaultConfiguration.html#a698d54fa3a9cc7ab8010216b8cea31d3',1,'VaultConfiguration']]]
+  ['mountpoint_0',['MountPoint',['../classStratio_1_1Extensions_1_1Configuration_1_1Vault_1_1Configuration_1_1VaultConfiguration.html#a9673bde05a0895813890792ca5f40254',1,'Stratio::Extensions::Configuration::Vault::Configuration::VaultConfiguration']]]
 ];

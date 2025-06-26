@@ -1,0 +1,4 @@
+var namespaceStratio_1_1Extensions_1_1Configuration_1_1Vault_1_1Extensions =
+[
+    [ "VaultServiceHostingExtensions", "classStratio_1_1Extensions_1_1Configuration_1_1Vault_1_1Extensions_1_1VaultServiceHostingExtensions.html", "classStratio_1_1Extensions_1_1Configuration_1_1Vault_1_1Extensions_1_1VaultServiceHostingExtensions" ]
+];

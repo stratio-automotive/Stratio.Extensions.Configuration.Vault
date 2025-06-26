@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['replaceplaceholdersinsection_30',['ReplacePlaceholdersInSection',['../classVaultConfigurationProvider.html#aecfa3d29b2907377732eb5fb02dc4488',1,'VaultConfigurationProvider']]],
-  ['roleidpath_31',['RoleIdPath',['../classVaultConfiguration.html#a86fa7fe3da58cf2ef20f5d046bf4ba11',1,'VaultConfiguration']]]
+  ['materializeplaceholdersinsection_0',['MaterializePlaceholdersInSection',['../classStratio_1_1Extensions_1_1Configuration_1_1Vault_1_1Configuration_1_1VaultConfigurationProvider.html#a210aabc048e57cbad89c03d0981f7819',1,'Stratio::Extensions::Configuration::Vault::Configuration::VaultConfigurationProvider']]],
+  ['mountpoint_1',['MountPoint',['../classStratio_1_1Extensions_1_1Configuration_1_1Vault_1_1Configuration_1_1VaultConfiguration.html#a9673bde05a0895813890792ca5f40254',1,'Stratio::Extensions::Configuration::Vault::Configuration::VaultConfiguration']]]
 ];

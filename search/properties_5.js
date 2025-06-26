@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['roleidpath_121',['RoleIdPath',['../classVaultConfiguration.html#a86fa7fe3da58cf2ef20f5d046bf4ba11',1,'VaultConfiguration']]]
+  ['roleidpath_0',['RoleIdPath',['../classStratio_1_1Extensions_1_1Configuration_1_1Vault_1_1Configuration_1_1VaultConfiguration.html#aab02ef5cc7d28930bf90fe60027b4da8',1,'Stratio::Extensions::Configuration::Vault::Configuration::VaultConfiguration']]]
 ];

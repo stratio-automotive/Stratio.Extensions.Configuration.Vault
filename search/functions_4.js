@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hasplaceholders_76',['HasPlaceholders',['../classVaultCheckPlaceholders.html#a6c299ec23bfb842b79e11f891cec521d',1,'VaultCheckPlaceholders']]]
+  ['hasplaceholders_0',['HasPlaceholders',['../classStratio_1_1Extensions_1_1Configuration_1_1Vault_1_1Configuration_1_1VaultCheckPlaceholders.html#ac332f56c7f7a08e49b63fe66a59ae776',1,'Stratio::Extensions::Configuration::Vault::Configuration::VaultCheckPlaceholders']]]
 ];

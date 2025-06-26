@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['load_26',['Load',['../classVaultConfigurationProvider.html#a49e5f3688795bd6bafb877f4c103c7f8',1,'VaultConfigurationProvider']]]
+  ['in_20toc_0',['Stratio.Extentions.Configuration.Vault &lt;!-- omit in toc --&gt;',['../md_README.html',1,'']]],
+  ['it_20works_1',['How it Works',['../md_README.html#autotoc_md3',1,'']]]
 ];

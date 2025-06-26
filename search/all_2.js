@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['basicconnectionchecks_8',['BasicConnectionChecks',['../classVaultConfiguration.html#a58522ddcf558aef7d9f1b0c12219ca6a',1,'VaultConfiguration']]],
-  ['build_9',['Build',['../classVaultConfigurationSource.html#a9308b24536d335f44b5abd233eb2cda2',1,'VaultConfigurationSource']]]
+  ['basicconnectionchecks_0',['BasicConnectionChecks',['../classStratio_1_1Extensions_1_1Configuration_1_1Vault_1_1Configuration_1_1VaultConfiguration.html#a6a9b23be7d0f6b0754b1b9285135eb56',1,'Stratio::Extensions::Configuration::Vault::Configuration::VaultConfiguration']]],
+  ['build_1',['Build',['../classStratio_1_1Extensions_1_1Configuration_1_1Vault_1_1Configuration_1_1VaultConfigurationSource.html#a0dec7e57888aedfa9ccf60f44dd990dd',1,'Stratio::Extensions::Configuration::Vault::Configuration::VaultConfigurationSource']]]
 ];

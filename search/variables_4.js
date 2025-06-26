@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['userhome_106',['UserHome',['../classPlaceholderTypes.html#aef73d4d4b362b6d9db6e4a91c19c6ee9',1,'PlaceholderTypes']]]
+  ['userhome_0',['UserHome',['../classStratio_1_1Extensions_1_1Configuration_1_1Vault_1_1Constants_1_1PlaceholderTypes.html#ae6f432845db6ace44ebf038aa831666d',1,'Stratio::Extensions::Configuration::Vault::Constants::PlaceholderTypes']]]
 ];
