@@ -38,7 +38,7 @@ jobs:
             pytest --cov-report html --cov -v
 
       - name: Archive code coverage results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: code-coverage-report
           path: utils/linter/htmlcov/*
@@ -87,7 +87,7 @@ jobs:
         twine upload dist/*
     
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: vault-appsettings-linter-package-dist
         path: utils/linter/dist
