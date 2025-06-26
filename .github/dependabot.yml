@@ -11,7 +11,10 @@ updates:
       interval: "weekly"
       day: "monday"
       time: "07:30"
-      timezone: "Europe/Lisbon" 
+      timezone: "Europe/Lisbon"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
     assignees: 
       - rgcouto
       - lucid-at-dream
